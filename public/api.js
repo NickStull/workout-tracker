@@ -5,9 +5,10 @@ const API = {
       res = await fetch("/api/workouts");
     } catch (err) {
       console.log(err)
-    }
-    const json = await res.json();
-
+    }   
+    
+    const json = await res.json(); //why do we have to await here again
+    
     return json[json.length - 1];
   },
   async addExercise(data) {
