@@ -21,8 +21,8 @@ module.exports = function(app) {
 
     app.post("/api/workouts", function(req, res) {
         db.Workout.create(req.body)
-          .then(function(dbWorkout) {
-            res.json(dbWorkout);
+          .then(function(data) {
+            res.json(data);
           })
           .catch(function(err) {
             res.json(err);
@@ -34,8 +34,8 @@ module.exports = function(app) {
           { $push: 
             { exercises: req.body }
           })
-          .then(function(results) {
-            res.json(results);
+          .then(function(data) {
+            res.json(data);
           })
           .catch(function(err) {
             res.json(err);
@@ -50,10 +50,9 @@ module.exports = function(app) {
                 totalDuration: { $sum: "$exercises.duration" }
               }
             }
-            // sort the data by descending order and get only the last 7 entries
           ]).sort({ day: -1 }).limit(7)
-          .then(dbWorkout => {
-            res.json(dbWorkout);
+          .then(data => {
+            res.json(data);
           })
           .catch(err => {
             res.json(err);
