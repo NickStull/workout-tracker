@@ -2,7 +2,14 @@ const db = require("../models");
 
 module.exports = function(app) {
     app.get("/api/workouts", function(req, res) {
-        db.Workout.find()
+        db.Workout.aggregate(
+            [
+                {
+                $addFields: {
+                    totalDuration: { $sum: "$exercises.duration" }
+                }
+            }
+        ])
         .then(data => {
             console.log(data)
             res.json(data);
@@ -34,4 +41,22 @@ module.exports = function(app) {
             res.json(err);
           }); 
       });
+
+      app.get("/api/workouts/range", function(req, res) {      
+        db.Workout.aggregate(
+          [
+            {
+              $addFields: {
+                totalDuration: { $sum: "$exercises.duration" }
+              }
+            }
+            // sort the data by descending order and get only the last 7 entries
+          ]).sort({ day: -1 }).limit(7)
+          .then(dbWorkout => {
+            res.json(dbWorkout);
+          })
+          .catch(err => {
+            res.json(err);
+          });
+    });
 };
