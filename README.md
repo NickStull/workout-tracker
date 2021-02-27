@@ -28,7 +28,7 @@ npm i
 
 ## Usage
 
-You can either run the app using node server.js or you can view the live deployed link here: 
+You can either run the app using node server.js or you can view the live deployed link here: https://warm-gorge-34904.herokuapp.com/
 
 ## Contributing
 
